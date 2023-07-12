@@ -9,24 +9,14 @@
 name: Java CI with Maven
 
 on:
-  push:
-    branches: [ "main","dev" ]
   pull_request:
-    branches: [ "main","dev" ]
+    branches: [ "dev" ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    
     steps:
-    - uses: mirromutth/mysql-action@v1.1
-      with:
-        container port: 3303 # Optional, default value is 3306. The port of container
-        character set server: 'utf8' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
-        collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
-        mysql version: '5.7' # Optional, default value is "latest". The version of the MySQL
-        mysql root password: 20613341 # Required if "mysql user" is empty, default is empty. The root superuser password
     
     - uses: actions/checkout@v3
     - name: Set up JDK 17

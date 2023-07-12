@@ -1,0 +1,5 @@
+package com.manager.author.api.models;
+
+public class Book {
+
+}

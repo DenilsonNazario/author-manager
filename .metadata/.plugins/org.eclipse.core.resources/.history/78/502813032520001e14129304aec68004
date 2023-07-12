@@ -1,0 +1,83 @@
+package com.api.rest.gerenciador.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.api.rest.gerenciador.models.Author;
+import com.api.rest.gerenciador.repository.AuthorRepository;
+
+@RestController
+@RequestMapping(value = "/api/author")
+@CrossOrigin(origins="*")
+public class AuthorController {
+	
+	@Autowired
+	private AuthorRepository authorRepository;
+	
+	@GetMapping("/findAll")
+	public ResponseEntity<List<Author>> getAuthor (){
+		List<Author> list = this.authorRepository.findAll();
+		if(list.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}		
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/search/{id}")
+	public ResponseEntity<Author> getAuthor (@PathVariable("id") Long id){
+		
+		Optional<Author> author = this.authorRepository.findById(id);
+		
+		if(!author.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+					"Not Found");
+		}		
+		return ResponseEntity.ok(author.get());
+	}
+	
+	@PostMapping("/save")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Author save (@Validated @RequestBody Author author) {
+		if(author.getName()==null || author.getName().isBlank()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"name not set");
+		}		
+		return this.authorRepository.save(author);
+	}
+	
+ private List<Author> getListTemp() {
+	Author author = new Author();
+	author.setId(1L);
+	author.setName("William Shakespeare");
+	author.setNationality("Inglaterra");
+	
+	Author author2 = new Author();
+	author2.setId(2L);
+	author2.setName("Agatha Christie");
+	author2.setNationality("Inglaterra");
+	
+	List<Author> list = new ArrayList<>();
+	
+	list.add(author);
+	list.add(author2);
+	
+	return list;	
+
+}
+
+}

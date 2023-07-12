@@ -1,0 +1,98 @@
+package com.api.rest.gerenciador.models;
+
+import java.util.Date;
+import java.util.Objects;
+
+public class Book {
+	
+	private Long id;
+	private String name;
+	private String descripton;
+	private Date exhibitionDate;
+	private Date publicationDate;
+	
+	public Book(Long id, String name, String descripton, Date exhibitionDate, Date publicationDate) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.descripton = descripton;
+		this.exhibitionDate = exhibitionDate;
+		this.publicationDate = publicationDate;
+	}
+	
+	
+	public Book() {}
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getDescripton() {
+		return descripton;
+	}
+
+
+	public void setDescripton(String descripton) {
+		this.descripton = descripton;
+	}
+
+
+	public Date getExhibitionDate() {
+		return exhibitionDate;
+	}
+
+
+	public void setExhibitionDate(Date exhibitionDate) {
+		this.exhibitionDate = exhibitionDate;
+	}
+
+
+	public Date getPublicationDate() {
+		return publicationDate;
+	}
+
+
+	public void setPublicationDate(Date publicationDate) {
+		this.publicationDate = publicationDate;
+	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Book other = (Book) obj;
+		return Objects.equals(id, other.id);
+	}
+	
+	
+	
+
+}

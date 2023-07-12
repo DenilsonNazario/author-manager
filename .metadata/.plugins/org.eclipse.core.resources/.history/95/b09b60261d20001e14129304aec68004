@@ -1,0 +1,54 @@
+package com.api.rest.gerenciador.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.api.rest.gerenciador.models.Book;
+import com.api.rest.gerenciador.repository.BookRepository;
+
+@RestController
+@RequestMapping(value="/api/book")
+@CrossOrigin(origins = "*")
+public class BookController {
+	
+	@Autowired
+	private BookRepository bookRepository;
+
+	@GetMapping("/findAll")
+	public ResponseEntity<List<Book>> getBooks (){		
+		if(this.bookRepository.findAll().isEmpty()) {
+			return ResponseEntity.notFound().build();			
+		}
+		return ResponseEntity.ok(this.bookRepository.findAll());
+	}
+	
+	@PostMapping(value = "/save")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Book saveBook (@Validated @RequestBody Book book) {
+		
+		if(book.getExhibitionDate()==(null)) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"exhibition date not set");
+		}
+	
+		return (this.bookRepository.save(book));
+	}
+	
+	public ResponseEntity<List<Book>> findByNameAndDesc (@PathVariable("name")String name, @PathVariable("desc")String desc){		
+		return null;
+	}
+}

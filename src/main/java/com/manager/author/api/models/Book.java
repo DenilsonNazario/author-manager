@@ -3,11 +3,20 @@ package com.manager.author.api.models;
 import java.util.Date;
 import java.util.Objects;
 
+import jakarta.annotation.Nonnull;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity
 public class Book {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
+	@Nonnull	
 	private String name;
 	
 	private String descripton;

@@ -1,33 +1,46 @@
 package com.manager.author.api.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.annotation.Nonnull;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Author {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "author_id")
 	private Long id;
-	
+
 	@Nonnull
 	private String name;
 	private String email;
 	private String nationality;
 	private String docNumber;
 
-	public Author(Long id, String name, String email, String nationality, String docNumber) {
+	@JsonIgnore
+	@ManyToMany(mappedBy = "authors")
+	private List<Book> books = new ArrayList<>();
+
+	public Author(Long id, String name, String email, String nationality, String docNumber, List<Book> books) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.nationality = nationality;
 		this.docNumber = docNumber;
+		this.books = books;
 	}
 
 	public Author() {
@@ -71,6 +84,14 @@ public class Author {
 
 	public void setDocNumber(String docNumber) {
 		this.docNumber = docNumber;
+	}
+
+	public List<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
 	}
 
 	@Override

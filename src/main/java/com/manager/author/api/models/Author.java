@@ -3,12 +3,11 @@ package com.manager.author.api.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +22,9 @@ public class Author {
 	@Column(name = "author_id")
 	private Long id;
 
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
+	
 	@Nonnull
 	private String name;
 	private String nationality;

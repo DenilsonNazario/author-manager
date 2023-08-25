@@ -24,7 +24,14 @@ public class Book {
 	@Column(name = "book_id")
 	private Long id;
 
-	@Nonnull
+@Entity
+public class Book {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
+	
+	@Nonnull	
 	private String name;
 
 	private String descripton;
